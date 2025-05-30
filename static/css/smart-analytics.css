@@ -1,0 +1,347 @@
+/* Smart Analytics Styles */
+
+/* Popularity Badges */
+.popularity-badge {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    padding: 0.4rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border: 2px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(5px);
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+.popularity-legendary {
+    background: linear-gradient(135deg, #ff0000, #ff4500);
+    box-shadow: 0 0 20px rgba(255,0,0,0.5);
+}
+
+.popularity-hot {
+    background: linear-gradient(135deg, #ff8c00, #ffd700);
+    box-shadow: 0 0 15px rgba(255,140,0,0.5);
+}
+
+.popularity-trending {
+    background: linear-gradient(135deg, #00ff88, #00bfff);
+    box-shadow: 0 0 15px rgba(0,255,136,0.4);
+}
+
+.popularity-rising {
+    background: linear-gradient(135deg, #9370db, #da70d6);
+    box-shadow: 0 0 12px rgba(147,112,219,0.4);
+}
+
+@keyframes badgePulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.9; }
+}
+
+/* Recommendations Section */
+.recommendations-section {
+    background: linear-gradient(135deg, rgba(26,26,32,0.95), rgba(42,42,48,0.95));
+    border: 2px solid rgba(255,215,0,0.3);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 3rem 0;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.recommendations-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.recommendations-header h3 {
+    color: #FFD700;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.recommendations-header p {
+    color: rgba(255,255,255,0.8);
+    font-size: 1rem;
+    margin: 0;
+}
+
+.recommendations-content {
+    display: grid;
+    gap: 1.5rem;
+}
+
+/* Recommendation Cards */
+.recommendation-card {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,215,0,0.3);
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.recommendation-card:hover {
+    background: rgba(255,215,0,0.1);
+    border-color: #FFD700;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(255,215,0,0.2);
+}
+
+.recommendation-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.rec-icon {
+    font-size: 2rem;
+    min-width: 50px;
+    text-align: center;
+}
+
+.rec-content h4 {
+    color: #FFD700;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.rec-content p {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+/* Recommendation Usernames */
+.rec-usernames {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.rec-username {
+    background: linear-gradient(135deg, #6f42c1, #007bff);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.rec-username:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(111,66,193,0.4);
+    background: linear-gradient(135deg, #007bff, #6f42c1);
+}
+
+/* No Recommendations State */
+.no-recommendations {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: rgba(255,255,255,0.6);
+}
+
+.no-recommendations i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #FFD700;
+}
+
+.no-recommendations p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Analytics Panel */
+.analytics-panel {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid rgba(255,215,0,0.3);
+}
+
+.analytics-header h4 {
+    color: #FFD700;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.analytics-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.analytics-stat {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,215,0,0.2);
+    border-radius: 10px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.analytics-stat:hover {
+    background: rgba(255,215,0,0.05);
+    border-color: #FFD700;
+    transform: translateY(-3px);
+}
+
+.analytics-stat .stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #FFD700;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 0.5rem;
+}
+
+.analytics-stat .stat-label {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .recommendations-section {
+        padding: 1.5rem;
+        margin: 2rem 0;
+    }
+    
+    .recommendations-header h3 {
+        font-size: 1.5rem;
+    }
+    
+    .recommendation-card {
+        padding: 1.2rem;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .rec-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .rec-usernames {
+        justify-content: center;
+    }
+    
+    .rec-username {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+    
+    .analytics-stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .analytics-stat {
+        padding: 1.2rem 1rem;
+    }
+    
+    .analytics-stat .stat-number {
+        font-size: 1.8rem;
+    }
+    
+    .popularity-badge {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.6rem;
+        top: -6px;
+        left: -6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .recommendations-section {
+        padding: 1rem;
+    }
+    
+    .recommendations-header h3 {
+        font-size: 1.3rem;
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+    
+    .recommendation-card {
+        padding: 1rem;
+    }
+    
+    .rec-content h4 {
+        font-size: 1.1rem;
+    }
+    
+    .rec-content p {
+        font-size: 0.85rem;
+    }
+    
+    .rec-username {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .analytics-stat .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .analytics-stat .stat-label {
+        font-size: 0.8rem;
+    }
+    
+    .no-recommendations i {
+        font-size: 2.5rem;
+    }
+    
+    .no-recommendations p {
+        font-size: 1rem;
+    }
+}
+
+/* Enhanced User Card positioning for badges */
+.user-card {
+    position: relative;
+    overflow: visible;
+}
+
+.user-card-header {
+    position: relative;
+}
+
+/* Smooth animations */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.recommendation-card {
+    animation: slideInUp 0.6s ease-out;
+}
+
+.recommendation-card:nth-child(1) { animation-delay: 0.1s; }
+.recommendation-card:nth-child(2) { animation-delay: 0.2s; }
+.recommendation-card:nth-child(3) { animation-delay: 0.3s; }
+.recommendation-card:nth-child(4) { animation-delay: 0.4s; }
