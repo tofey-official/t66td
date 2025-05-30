@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if login_page %}
+لوحة التحكم - تسجيل الدخول | شروحات توفي
+{% else %}
+لوحة التحكم الإدارية | شروحات توفي
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if login_page %}
+    <!-- Admin Login Form -->
+    <section class="admin-login-section py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="admin-login-card">
+                    <div class="login-header text-center mb-4">
+                        <div class="login-logo">
+                            <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="شروحات توفي">
+                        </div>
+                        <h2>لوحة التحكم</h2>
+                        <p>تسجيل الدخول للإدارة</p>
+                    </div>
+                    
+                    <form method="POST" action="{{ url_for('admin_login_post') }}" class="login-form">
+                        <div class="form-group mb-3">
+                            <label for="username" class="form-label">
+                                <i class="fas fa-user"></i>
+                                اسم المستخدم
+                            </label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        
+                        <div class="form-group mb-4">
+                            <label for="password" class="form-label">
+                                <i class="fas fa-lock"></i>
+                                كلمة المرور
+                            </label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-admin-login w-100">
+                            <i class="fas fa-sign-in-alt"></i>
+                            تسجيل الدخول
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    {% elif dashboard %}
+    <!-- Admin Dashboard -->
+    <section class="admin-dashboard py-4">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header mb-5">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="dashboard-title">
+                        <i class="fas fa-tachometer-alt"></i>
+                        لوحة التحكم الإدارية
+                    </h1>
+                    <p class="dashboard-subtitle">إدارة يوزرات السوشيال ميديا</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="{{ url_for('admin_logout') }}" class="btn btn-outline-danger">
+                        <i class="fas fa-sign-out-alt"></i>
+                        تسجيل الخروج
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row mb-5">
+            <div class="col-md-3 mb-3">
+                <div class="stat-card total-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">{{ total_users }}</h3>
+                        <p class="stat-label">إجمالي المستخدمين</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 mb-3">
+                <div class="stat-card instagram-stat-card">
+                    <div class="stat-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">{{ instagram_count }}</h3>
+                        <p class="stat-label">Instagram</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 mb-3">
+                <div class="stat-card tiktok-stat-card">
+                    <div class="stat-icon">
+                        <i class="fab fa-tiktok"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">{{ tiktok_count }}</h3>
+                        <p class="stat-label">TikTok</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 mb-3">
+                <div class="stat-card time-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">24</h3>
+                        <p class="stat-label">ساعة مدة العرض</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Management Table -->
+        <div class="users-management">
+            <div class="management-header mb-4">
+                <h2>
+                    <i class="fas fa-list"></i>
+                    إدارة المستخدمين
+                </h2>
+            </div>
+            
+            {% if users %}
+            <div class="table-responsive">
+                <table class="table admin-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>اسم المستخدم</th>
+                            <th>المنصة</th>
+                            <th>تاريخ الإضافة</th>
+                            <th>الوقت المتبقي</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>
+                                <div class="user-cell">
+                                    <i class="fab fa-{{ user.platform }}"></i>
+                                    <span>{{ user.username }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="platform-badge {{ user.platform }}-badge">
+                                    {{ 'إنستغرام' if user.platform == 'instagram' else 'تيك توك' }}
+                                </span>
+                            </td>
+                            <td>{{ user.added_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>
+                                <span class="time-remaining">
+                                    <i class="fas fa-clock"></i>
+                                    {{ user.time_remaining }}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="{{ user.profile_url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        زيارة
+                                    </a>
+                                    <a href="{{ url_for('admin_delete_user', user_id=user.id) }}" 
+                                       class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('هل أنت متأكد من حذف هذا المستخدم؟')">
+                                        <i class="fas fa-trash"></i>
+                                        حذف
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-admin-state">
+                <i class="fas fa-users-slash"></i>
+                <h3>لا توجد مستخدمين حالياً</h3>
+                <p>لم يتم إضافة أي مستخدمين بعد</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- API Information -->
+        <div class="api-info-section mt-5">
+            <h2 class="mb-4">
+                <i class="fas fa-code"></i>
+                معلومات API
+            </h2>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="api-info-card">
+                        <h4>إضافة مستخدم Instagram</h4>
+                        <code>GET /instagram?username=اسم_المستخدم</code>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="api-info-card">
+                        <h4>إضافة مستخدم TikTok</h4>
+                        <code>GET /tiktok?username=اسم_المستخدم</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% if dashboard %}
+<script>
+// Auto-refresh dashboard every 30 seconds
+setInterval(function() {
+    location.reload();
+}, 30000);
+</script>
+{% endif %}
+{% endblock %}

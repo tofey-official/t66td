@@ -1,0 +1,697 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <!-- Hero Section -->
+    <section class="hero-section text-center py-5">
+        <div class="hero-content">
+            <div class="hero-logo mb-4">
+                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="شروحات توفي" class="hero-logo-img">
+                <h1 class="hero-title">شروحات توفي</h1>
+            </div>
+            <p class="hero-subtitle">منصة عصرية وفخمة لعرض يوزرات السوشيال ميديا</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <i class="fab fa-instagram"></i>
+                    <span class="stat-number">{{ instagram_users|length }}</span>
+                    <span class="stat-label">Instagram</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fab fa-tiktok"></i>
+                    <span class="stat-number">{{ tiktok_users|length }}</span>
+                    <span class="stat-label">TikTok</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-users"></i>
+                    <span class="stat-number">{{ total_users }}</span>
+                    <span class="stat-label">المجموع</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Auction Banner -->
+    <section class="auction-banner py-3">
+        <div class="auction-content">
+            <div class="auction-icon">
+                <i class="fas fa-gavel"></i>
+            </div>
+            <div class="auction-text">
+                <h3>مزاد اليوزرات المباشر</h3>
+                <p>يوزرات حصرية متاحة لفترة محدودة - لا تفوت الفرصة!</p>
+            </div>
+            <div class="auction-timer">
+                <div class="global-countdown" id="globalCountdown">
+                    <span class="time-unit">
+                        <span class="time-value" id="globalHours">23</span>
+                        <span class="time-label">ساعة</span>
+                    </span>
+                    <span class="separator">:</span>
+                    <span class="time-unit">
+                        <span class="time-value" id="globalMinutes">59</span>
+                        <span class="time-label">دقيقة</span>
+                    </span>
+                    <span class="separator">:</span>
+                    <span class="time-unit">
+                        <span class="time-value" id="globalSeconds">59</span>
+                        <span class="time-label">ثانية</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section py-5">
+        <div class="section-header text-center mb-5">
+            <h2 class="section-title">مميزات المنصة</h2>
+            <p class="section-subtitle">اكتشف مايجعل شروحات توفي المنصة الأفضل لعرض اليوزرات</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3>نظام المزاد المباشر</h3>
+                    <p>مزاد حي مع عداد تنازلي لكل يوزر وإحصائيات متحركة فورية</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>آمن وموثوق</h3>
+                    <p>حماية عالية للبيانات مع تشفير متقدم وخصوصية كاملة</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3>تأثيرات بصرية فخمة</h3>
+                    <p>تجربة بصرية استثنائية مع تأثيرات متحركة وتصميم فاخر</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Users Display Section -->
+    <section class="users-section py-5">
+        <div class="row">
+            <!-- Instagram Users -->
+            <div class="col-lg-6 mb-5">
+                <div class="platform-section">
+                    <div class="platform-header instagram-header">
+                        <i class="fab fa-instagram"></i>
+                        <h2>يوزرات Instagram</h2>
+                        <span class="user-count">{{ instagram_users|length }}</span>
+                    </div>
+                    
+                    <div class="users-grid">
+                        {% if instagram_users %}
+                            {% for user in instagram_users %}
+                                <div class="enhanced-user-card instagram-card" data-username="{{ user.username }}" data-expires="{{ user.expires_at.isoformat() }}">
+                                    <div class="card-header">
+                                        <div class="user-avatar">
+                                            <i class="fab fa-instagram"></i>
+                                        </div>
+                                        <div class="user-info">
+                                            <h4 class="username">{{ user.username }}</h4>
+                                            <p class="platform">Instagram</p>
+                                        </div>
+                                        <div class="user-status">
+                                            <span class="status-badge active">مباشر</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-body">
+                                        <!-- Live Countdown Circle -->
+                                        <div class="countdown-container">
+                                            <div class="countdown-circle">
+                                                <svg class="countdown-ring" width="80" height="80">
+                                                    <defs>
+                                                        <linearGradient id="instagramGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                            <stop offset="0%" style="stop-color:#E4405F"/>
+                                                            <stop offset="100%" style="stop-color:#F77737"/>
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <circle cx="40" cy="40" r="35" fill="transparent" stroke="#333" stroke-width="2"/>
+                                                    <circle class="countdown-progress" cx="40" cy="40" r="35" fill="transparent" stroke="url(#instagramGradient)" stroke-width="4" stroke-linecap="round"/>
+                                                </svg>
+                                                <div class="countdown-text">
+                                                    <span class="countdown-hours">00</span>
+                                                    <span class="countdown-minutes">00</span>
+                                                    <span class="countdown-seconds">00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Live Stats -->
+                                        <div class="live-stats">
+                                            <div class="stat-item">
+                                                <i class="fas fa-eye pulse"></i>
+                                                <span class="stat-value" data-target="{{ range(100, 1000) | random }}">0</span>
+                                                <small>مشاهدة</small>
+                                            </div>
+                                            <div class="stat-item">
+                                                <i class="fas fa-heart pulse"></i>
+                                                <span class="stat-value" data-target="{{ range(50, 300) | random }}">0</span>
+                                                <small>إعجاب</small>
+                                            </div>
+                                            <div class="stat-item">
+                                                <i class="fas fa-share pulse"></i>
+                                                <span class="stat-value" data-target="{{ range(10, 100) | random }}">0</span>
+                                                <small>مشاركة</small>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Bid Price -->
+                                        <div class="bid-section">
+                                            <div class="current-bid">
+                                                <span class="bid-label">السعر الحالي</span>
+                                                <span class="bid-amount" data-price="{{ range(5, 50) | random }}">$0</span>
+                                            </div>
+                                            <div class="bid-controls">
+                                                <button class="btn-bid" onclick="placeBid(this)">
+                                                    <i class="fas fa-gavel"></i>
+                                                    مزايدة
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-footer">
+                                        <a href="{{ user.profile_url }}" target="_blank" class="btn-visit">
+                                            <i class="fas fa-external-link-alt"></i>
+                                            زيارة الملف
+                                        </a>
+                                        <button class="btn-favorite" onclick="toggleFavorite(this)">
+                                            <i class="far fa-heart"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="empty-state">
+                                <i class="fab fa-instagram"></i>
+                                <h3>لا توجد يوزرات Instagram حالياً</h3>
+                                <p>ترقب المزيد من اليوزرات قريباً</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- TikTok Users -->
+            <div class="col-lg-6 mb-5">
+                <div class="platform-section">
+                    <div class="platform-header tiktok-header">
+                        <i class="fab fa-tiktok"></i>
+                        <h2>يوزرات TikTok</h2>
+                        <span class="user-count">{{ tiktok_users|length }}</span>
+                    </div>
+                    
+                    <div class="users-grid">
+                        {% if tiktok_users %}
+                            {% for user in tiktok_users %}
+                                <div class="enhanced-user-card tiktok-card" data-username="{{ user.username }}" data-expires="{{ user.expires_at.isoformat() }}">
+                                    <div class="card-header">
+                                        <div class="user-avatar">
+                                            <i class="fab fa-tiktok"></i>
+                                        </div>
+                                        <div class="user-info">
+                                            <h4 class="username">{{ user.username }}</h4>
+                                            <p class="platform">TikTok</p>
+                                        </div>
+                                        <div class="user-status">
+                                            <span class="status-badge active">مباشر</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-body">
+                                        <!-- Live Countdown Circle -->
+                                        <div class="countdown-container">
+                                            <div class="countdown-circle">
+                                                <svg class="countdown-ring" width="80" height="80">
+                                                    <defs>
+                                                        <linearGradient id="tiktokGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                            <stop offset="0%" style="stop-color:#FF0050"/>
+                                                            <stop offset="100%" style="stop-color:#00F5FF"/>
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <circle cx="40" cy="40" r="35" fill="transparent" stroke="#333" stroke-width="2"/>
+                                                    <circle class="countdown-progress" cx="40" cy="40" r="35" fill="transparent" stroke="url(#tiktokGradient)" stroke-width="4" stroke-linecap="round"/>
+                                                </svg>
+                                                <div class="countdown-text">
+                                                    <span class="countdown-hours">00</span>
+                                                    <span class="countdown-minutes">00</span>
+                                                    <span class="countdown-seconds">00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Live Stats -->
+                                        <div class="live-stats">
+                                            <div class="stat-item">
+                                                <i class="fas fa-eye pulse"></i>
+                                                <span class="stat-value" data-target="{{ range(200, 2000) | random }}">0</span>
+                                                <small>مشاهدة</small>
+                                            </div>
+                                            <div class="stat-item">
+                                                <i class="fas fa-heart pulse"></i>
+                                                <span class="stat-value" data-target="{{ range(100, 500) | random }}">0</span>
+                                                <small>إعجاب</small>
+                                            </div>
+                                            <div class="stat-item">
+                                                <i class="fas fa-share pulse"></i>
+                                                <span class="stat-value" data-target="{{ range(20, 150) | random }}">0</span>
+                                                <small>مشاركة</small>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Bid Price -->
+                                        <div class="bid-section">
+                                            <div class="current-bid">
+                                                <span class="bid-label">السعر الحالي</span>
+                                                <span class="bid-amount" data-price="{{ range(8, 80) | random }}">$0</span>
+                                            </div>
+                                            <div class="bid-controls">
+                                                <button class="btn-bid" onclick="placeBid(this)">
+                                                    <i class="fas fa-gavel"></i>
+                                                    مزايدة
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-footer">
+                                        <a href="{{ user.profile_url }}" target="_blank" class="btn-visit">
+                                            <i class="fas fa-external-link-alt"></i>
+                                            زيارة الملف
+                                        </a>
+                                        <button class="btn-favorite" onclick="toggleFavorite(this)">
+                                            <i class="far fa-heart"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="empty-state">
+                                <i class="fab fa-tiktok"></i>
+                                <h3>لا توجد يوزرات TikTok حالياً</h3>
+                                <p>ترقب المزيد من اليوزرات قريباً</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIP Access Section -->
+    <section class="vip-section py-5 text-center">
+        <div class="vip-content">
+            <div class="vip-logo mb-4">
+                <i class="fas fa-crown"></i>
+            </div>
+            <h2 class="vip-title">منصة VIP حصرية</h2>
+            <p class="vip-subtitle">انضم إلى النخبة واحصل على يوزرات حصرية بجودة عالمية</p>
+            <div class="vip-features">
+                <div class="vip-feature">
+                    <i class="fas fa-star"></i>
+                    <span>جودة مميزة</span>
+                </div>
+                <div class="vip-feature">
+                    <i class="fas fa-bolt"></i>
+                    <span>سرعة فائقة</span>
+                </div>
+                <div class="vip-feature">
+                    <i class="fas fa-gem"></i>
+                    <span>حصرية مطلقة</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Luxury Notification System -->
+<div id="notification-container" class="notification-container"></div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Enhanced Live Auction System
+class AuctionSystem {
+    constructor() {
+        this.init();
+    }
+    
+    init() {
+        this.startGlobalCountdown();
+        this.initializeUserCountdowns();
+        this.animateStats();
+        this.startBidAnimation();
+        this.showWelcomeMessage();
+    }
+    
+    startGlobalCountdown() {
+        const globalTimer = setInterval(() => {
+            const now = new Date();
+            const midnight = new Date();
+            midnight.setHours(24, 0, 0, 0);
+            
+            const diff = midnight - now;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('globalHours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('globalMinutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('globalSeconds').textContent = seconds.toString().padStart(2, '0');
+            
+            // Add pulse effect on seconds change
+            if (seconds % 2 === 0) {
+                document.getElementById('globalCountdown').classList.add('pulse');
+                setTimeout(() => {
+                    document.getElementById('globalCountdown').classList.remove('pulse');
+                }, 500);
+            }
+        }, 1000);
+    }
+    
+    initializeUserCountdowns() {
+        document.querySelectorAll('.enhanced-user-card').forEach(card => {
+            const expiresAt = new Date(card.dataset.expires);
+            this.updateCountdown(card, expiresAt);
+            
+            setInterval(() => {
+                this.updateCountdown(card, expiresAt);
+            }, 1000);
+        });
+    }
+    
+    updateCountdown(card, expiresAt) {
+        const now = new Date();
+        const diff = expiresAt - now;
+        
+        if (diff <= 0) {
+            card.classList.add('expired');
+            return;
+        }
+        
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        const hoursEl = card.querySelector('.countdown-hours');
+        const minutesEl = card.querySelector('.countdown-minutes');
+        const secondsEl = card.querySelector('.countdown-seconds');
+        
+        if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
+        if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
+        if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
+        
+        // Update progress circle
+        const totalTime = 24 * 60 * 60 * 1000; // 24 hours
+        const progress = diff / totalTime;
+        const circle = card.querySelector('.countdown-progress');
+        const circumference = 2 * Math.PI * 35;
+        const offset = circumference - (progress * circumference);
+        
+        if (circle) {
+            circle.style.strokeDasharray = circumference;
+            circle.style.strokeDashoffset = offset;
+            circle.style.transition = 'stroke-dashoffset 1s linear';
+        }
+        
+        // Add urgency effects
+        if (hours < 1) {
+            card.classList.add('urgent');
+        }
+    }
+    
+    animateStats() {
+        document.querySelectorAll('.stat-value').forEach(stat => {
+            const target = parseInt(stat.dataset.target);
+            this.countUp(stat, 0, target, 2000);
+        });
+        
+        // Continuous random updates
+        setInterval(() => {
+            document.querySelectorAll('.stat-value').forEach(stat => {
+                const current = parseInt(stat.textContent);
+                const change = Math.floor(Math.random() * 10) - 5;
+                const newValue = Math.max(0, current + change);
+                stat.textContent = newValue;
+                
+                // Add flash effect
+                stat.parentElement.classList.add('flash');
+                setTimeout(() => {
+                    stat.parentElement.classList.remove('flash');
+                }, 300);
+            });
+        }, 5000);
+    }
+    
+    countUp(element, start, end, duration) {
+        const range = end - start;
+        const increment = range / (duration / 16);
+        let current = start;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= end) {
+                current = end;
+                clearInterval(timer);
+            }
+            element.textContent = Math.floor(current);
+        }, 16);
+    }
+    
+    startBidAnimation() {
+        document.querySelectorAll('.bid-amount').forEach(bid => {
+            const initialPrice = parseInt(bid.dataset.price);
+            bid.textContent = `$${initialPrice}`;
+            
+            // Random bid increases
+            setInterval(() => {
+                if (Math.random() < 0.3) { // 30% chance
+                    const current = parseInt(bid.textContent.replace('$', ''));
+                    const increase = Math.floor(Math.random() * 5) + 1;
+                    bid.textContent = `$${current + increase}`;
+                    
+                    // Add price increase animation
+                    bid.parentElement.classList.add('price-increase');
+                    setTimeout(() => {
+                        bid.parentElement.classList.remove('price-increase');
+                    }, 1000);
+                    
+                    // Show notification
+                    this.showBidNotification(bid.closest('.enhanced-user-card').dataset.username, current + increase);
+                }
+            }, Math.random() * 10000 + 5000); // Random interval 5-15 seconds
+        });
+    }
+    
+    showBidNotification(username, price) {
+        showLuxuryNotification(`مزايدة جديدة على ${username} - $${price}`, 'info');
+    }
+    
+    showWelcomeMessage() {
+        setTimeout(() => {
+            showLuxuryNotification('مرحباً بك في أول منصة مزاد يوزرات في العالم! 🏆', 'welcome');
+        }, 2000);
+    }
+}
+
+// Enhanced Functions
+function placeBid(button) {
+    const card = button.closest('.enhanced-user-card');
+    const bidAmount = card.querySelector('.bid-amount');
+    const current = parseInt(bidAmount.textContent.replace('$', ''));
+    const newBid = current + Math.floor(Math.random() * 10) + 5;
+    
+    bidAmount.textContent = `$${newBid}`;
+    card.classList.add('bid-placed');
+    
+    setTimeout(() => {
+        card.classList.remove('bid-placed');
+    }, 2000);
+    
+    showLuxuryNotification(`تم تسجيل مزايدتك بنجاح! السعر الجديد: $${newBid}`, 'success');
+}
+
+function toggleFavorite(button) {
+    const icon = button.querySelector('i');
+    const isFavorite = icon.classList.contains('fas');
+    
+    if (isFavorite) {
+        icon.classList.remove('fas');
+        icon.classList.add('far');
+        button.classList.remove('favorited');
+        showLuxuryNotification('تم إزالة من المفضلة', 'info');
+    } else {
+        icon.classList.remove('far');
+        icon.classList.add('fas');
+        button.classList.add('favorited');
+        showLuxuryNotification('تم إضافة للمفضلة', 'success');
+    }
+}
+
+// Enhanced notification system
+function showLuxuryNotification(message, type = 'info') {
+    const container = document.getElementById('notification-container');
+    const notification = document.createElement('div');
+    
+    const icons = {
+        welcome: 'fas fa-crown',
+        success: 'fas fa-check-circle',
+        info: 'fas fa-gavel',
+        warning: 'fas fa-exclamation-triangle'
+    };
+    
+    const colors = {
+        welcome: 'linear-gradient(45deg, #FFD700, #FF8C00)',
+        success: 'linear-gradient(45deg, #00FF88, #00CC66)',
+        info: 'linear-gradient(45deg, #0080FF, #0066CC)',
+        warning: 'linear-gradient(45deg, #FF8C00, #FF6600)'
+    };
+    
+    notification.className = `luxury-notification ${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="${icons[type] || icons.info}"></i>
+            <span>${message}</span>
+        </div>
+        <div class="notification-progress"></div>
+    `;
+    
+    notification.style.cssText = `
+        position: fixed;
+        top: 30px;
+        right: 30px;
+        background: ${colors[type] || colors.info};
+        color: white;
+        padding: 1.5rem 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        z-index: 10000;
+        transform: translateX(120%);
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        min-width: 350px;
+        max-width: 500px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.2);
+    `;
+    
+    container.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    const progress = notification.querySelector('.notification-progress');
+    progress.style.cssText = `
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        background: rgba(255,255,255,0.8);
+        border-radius: 0 0 15px 15px;
+        width: 100%;
+        animation: progressBar 4s linear;
+    `;
+    
+    setTimeout(() => {
+        notification.style.transform = 'translateX(120%)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 500);
+    }, 4000);
+}
+
+// Initialize the auction system
+document.addEventListener('DOMContentLoaded', function() {
+    new AuctionSystem();
+});
+
+// Add styles
+const auctionStyles = document.createElement('style');
+auctionStyles.textContent = `
+    @keyframes progressBar {
+        from { width: 100%; }
+        to { width: 0%; }
+    }
+    
+    .notification-content {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-weight: 500;
+        font-size: 1rem;
+    }
+    
+    .pulse {
+        animation: pulse 0.5s ease-in-out;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    .flash {
+        animation: flash 0.3s ease-in-out;
+    }
+    
+    @keyframes flash {
+        0% { background-color: rgba(255, 215, 0, 0.3); }
+        100% { background-color: transparent; }
+    }
+    
+    .price-increase {
+        animation: priceIncrease 1s ease-in-out;
+    }
+    
+    @keyframes priceIncrease {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); color: #00FF88; }
+        100% { transform: scale(1); }
+    }
+    
+    .bid-placed {
+        animation: bidSuccess 2s ease-in-out;
+    }
+    
+    @keyframes bidSuccess {
+        0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+    }
+    
+    .urgent {
+        animation: urgent 1s ease-in-out infinite;
+    }
+    
+    @keyframes urgent {
+        0%, 100% { border-color: #FF3333; }
+        50% { border-color: #FFD700; }
+    }
+    
+    .favorited {
+        color: #FF3333 !important;
+    }
+`;
+document.head.appendChild(auctionStyles);
+</script>
+{% endblock %}

@@ -1,0 +1,547 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <!-- Hero Section -->
+    <section class="hero-section text-center py-5">
+        <div class="hero-content">
+            <div class="hero-logo mb-4">
+                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="شروحات توفي" class="hero-logo-img">
+                <h1 class="hero-title">شروحات توفي</h1>
+            </div>
+            <p class="hero-subtitle">منصة عصرية وفخمة لعرض يوزرات السوشيال ميديا</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <i class="fab fa-instagram"></i>
+                    <span class="stat-number">{{ instagram_users|length }}</span>
+                    <span class="stat-label">Instagram</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fab fa-tiktok"></i>
+                    <span class="stat-number">{{ tiktok_users|length }}</span>
+                    <span class="stat-label">TikTok</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-users"></i>
+                    <span class="stat-number">{{ total_users }}</span>
+                    <span class="stat-label">المجموع</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section py-5">
+        <div class="section-header text-center mb-5">
+            <h2 class="section-title">مميزات المنصة</h2>
+            <p class="section-subtitle">اكتشف مايجعل شروحات توفي المنصة الأفضل لعرض اليوزرات</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>عرض مؤقت 24 ساعة</h3>
+                    <p>جميع اليوزرات تُعرض لمدة 24 ساعة فقط مع عداد تنازلي مباشر</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>آمن وموثوق</h3>
+                    <p>حماية عالية للبيانات مع تشفير متقدم وخصوصية كاملة</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3>تأثيرات بصرية فخمة</h3>
+                    <p>تجربة بصرية استثنائية مع تأثيرات متحركة وتصميم فاخر</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Users Display Section -->
+    <section class="users-section py-5">
+        <div class="row">
+            <!-- Instagram Users -->
+            <div class="col-lg-6 mb-5">
+                <div class="platform-section">
+                    <div class="platform-header instagram-header">
+                        <i class="fab fa-instagram"></i>
+                        <h2>يوزرات Instagram</h2>
+                        <span class="user-count">{{ instagram_users|length }}</span>
+                    </div>
+                    
+                    <div class="users-grid">
+                        {% if instagram_users %}
+                            {% for user in instagram_users %}
+                                <div class="user-card instagram-card" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                                    <div class="user-card-header">
+                                        <div class="user-avatar">
+                                            <i class="fab fa-instagram"></i>
+                                        </div>
+                                        <div class="user-info">
+                                            <h4 class="username">{{ user.username }}</h4>
+                                            <p class="platform">Instagram</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="user-card-body">
+                                        <div class="time-remaining">
+                                            <i class="fas fa-clock"></i>
+                                            <span>{{ user.time_remaining }}</span>
+                                        </div>
+                                        <div class="added-time">
+                                            <i class="fas fa-calendar"></i>
+                                            <span>{{ user.added_at.strftime('%Y-%m-%d %H:%M') }}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="user-card-footer">
+                                        <a href="{{ user.profile_url }}" target="_blank" class="btn-visit">
+                                            <i class="fas fa-external-link-alt"></i>
+                                            زيارة الملف الشخصي
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="empty-state">
+                                <i class="fab fa-instagram"></i>
+                                <h3>لا توجد يوزرات Instagram حالياً</h3>
+                                <p>استخدم API لإضافة يوزرات جديدة</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- TikTok Users -->
+            <div class="col-lg-6 mb-5">
+                <div class="platform-section">
+                    <div class="platform-header tiktok-header">
+                        <i class="fab fa-tiktok"></i>
+                        <h2>يوزرات TikTok</h2>
+                        <span class="user-count">{{ tiktok_users|length }}</span>
+                    </div>
+                    
+                    <div class="users-grid">
+                        {% if tiktok_users %}
+                            {% for user in tiktok_users %}
+                                <div class="user-card tiktok-card" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                                    <div class="user-card-header">
+                                        <div class="user-avatar">
+                                            <i class="fab fa-tiktok"></i>
+                                        </div>
+                                        <div class="user-info">
+                                            <h4 class="username">{{ user.username }}</h4>
+                                            <p class="platform">TikTok</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="user-card-body">
+                                        <div class="time-remaining">
+                                            <i class="fas fa-clock"></i>
+                                            <span>{{ user.time_remaining }}</span>
+                                        </div>
+                                        <div class="added-time">
+                                            <i class="fas fa-calendar"></i>
+                                            <span>{{ user.added_at.strftime('%Y-%m-%d %H:%M') }}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="user-card-footer">
+                                        <a href="{{ user.profile_url }}" target="_blank" class="btn-visit">
+                                            <i class="fas fa-external-link-alt"></i>
+                                            زيارة الملف الشخصي
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="empty-state">
+                                <i class="fab fa-tiktok"></i>
+                                <h3>لا توجد يوزرات TikTok حالياً</h3>
+                                <p>استخدم API لإضافة يوزرات جديدة</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Statistics Section -->
+    <section class="live-stats-section py-5">
+        <div class="stats-header text-center mb-5">
+            <h2 class="stats-title">إحصائيات مباشرة</h2>
+            <p class="stats-subtitle">تحديث فوري لأحدث البيانات</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="live-stat-card">
+                    <div class="stat-icon instagram-color">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="instagramCount">{{ instagram_users|length }}</div>
+                        <div class="stat-label">يوزرات Instagram</div>
+                        <div class="stat-change positive">+{{ range(5, 15) | random }}%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="live-stat-card">
+                    <div class="stat-icon tiktok-color">
+                        <i class="fab fa-tiktok"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="tiktokCount">{{ tiktok_users|length }}</div>
+                        <div class="stat-label">يوزرات TikTok</div>
+                        <div class="stat-change positive">+{{ range(8, 20) | random }}%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="live-stat-card">
+                    <div class="stat-icon views-color">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="totalViews">0</div>
+                        <div class="stat-label">مجموع المشاهدات</div>
+                        <div class="stat-change positive">مباشر</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="live-stat-card">
+                    <div class="stat-icon time-color">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="avgTime">{{ range(10, 20) | random }}</div>
+                        <div class="stat-label">ساعة متوسط البقاء</div>
+                        <div class="stat-change neutral">تلقائي</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIP Access Section -->
+    <section class="vip-section py-5 text-center">
+        <div class="vip-content">
+            <div class="vip-logo mb-4">
+                <i class="fas fa-crown"></i>
+            </div>
+            <h2 class="vip-title">منصة VIP حصرية</h2>
+            <p class="vip-subtitle">انضم إلى النخبة واحصل على يوزرات حصرية بجودة عالمية</p>
+            <div class="vip-features">
+                <div class="vip-feature">
+                    <i class="fas fa-star"></i>
+                    <span>جودة مميزة</span>
+                </div>
+                <div class="vip-feature">
+                    <i class="fas fa-bolt"></i>
+                    <span>سرعة فائقة</span>
+                </div>
+                <div class="vip-feature">
+                    <i class="fas fa-gem"></i>
+                    <span>حصرية مطلقة</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Luxury Notification System -->
+<div id="notification-container" class="notification-container"></div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Live Statistics System
+class LiveStatsSystem {
+    constructor() {
+        this.init();
+    }
+    
+    init() {
+        this.animateCounters();
+        this.startLiveUpdates();
+        this.initializeTimeShine();
+        this.showWelcomeMessage();
+    }
+    
+    animateCounters() {
+        // Animate all stat numbers on page load
+        const statNumbers = document.querySelectorAll('.stat-number');
+        statNumbers.forEach(stat => {
+            const target = parseInt(stat.textContent) || Math.floor(Math.random() * 1000) + 100;
+            this.countUp(stat, 0, target, 2000);
+        });
+        
+        // Animate total views counter
+        const totalViewsEl = document.getElementById('totalViews');
+        if (totalViewsEl) {
+            const totalViews = Math.floor(Math.random() * 50000) + 10000;
+            this.countUp(totalViewsEl, 0, totalViews, 3000);
+        }
+    }
+    
+    countUp(element, start, end, duration) {
+        const range = end - start;
+        const increment = range / (duration / 16);
+        let current = start;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= end) {
+                current = end;
+                clearInterval(timer);
+            }
+            element.textContent = Math.floor(current).toLocaleString();
+        }, 16);
+    }
+    
+    startLiveUpdates() {
+        // Update statistics every 5 seconds
+        setInterval(() => {
+            this.updateLiveStats();
+        }, 5000);
+        
+        // Update total views more frequently
+        setInterval(() => {
+            this.updateTotalViews();
+        }, 2000);
+    }
+    
+    updateLiveStats() {
+        const statNumbers = document.querySelectorAll('.live-stat-card .stat-number:not(#totalViews):not(#avgTime)');
+        statNumbers.forEach(stat => {
+            const current = parseInt(stat.textContent.replace(/,/g, '')) || 0;
+            const change = Math.floor(Math.random() * 20) - 5; // Random change between -5 and +15
+            const newValue = Math.max(0, current + change);
+            
+            if (change !== 0) {
+                stat.style.color = change > 0 ? '#00FF88' : '#FF6666';
+                stat.textContent = newValue.toLocaleString();
+                
+                // Add flash animation
+                stat.closest('.live-stat-card').classList.add('stat-updated');
+                setTimeout(() => {
+                    stat.style.color = '';
+                    stat.closest('.live-stat-card').classList.remove('stat-updated');
+                }, 1000);
+            }
+        });
+    }
+    
+    updateTotalViews() {
+        const totalViewsEl = document.getElementById('totalViews');
+        if (totalViewsEl) {
+            const current = parseInt(totalViewsEl.textContent.replace(/,/g, '')) || 0;
+            const increase = Math.floor(Math.random() * 10) + 1;
+            const newValue = current + increase;
+            totalViewsEl.textContent = newValue.toLocaleString();
+            
+            // Add pulse effect
+            totalViewsEl.style.transform = 'scale(1.1)';
+            totalViewsEl.style.color = '#00FF88';
+            setTimeout(() => {
+                totalViewsEl.style.transform = 'scale(1)';
+                totalViewsEl.style.color = '';
+            }, 300);
+        }
+    }
+    
+    initializeTimeShine() {
+        // Add shine effect to time remaining elements
+        const timeElements = document.querySelectorAll('.time-remaining');
+        timeElements.forEach(element => {
+            setInterval(() => {
+                element.classList.add('shine-active');
+                setTimeout(() => {
+                    element.classList.remove('shine-active');
+                }, 1000);
+            }, Math.random() * 10000 + 5000);
+        });
+    }
+    
+    showWelcomeMessage() {
+        setTimeout(() => {
+            showLuxuryNotification('مرحباً بك في شروحات توفي - أول منصة بإحصائيات مباشرة!', 'welcome');
+        }, 2000);
+    }
+}
+
+// Enhanced notification system
+function showLuxuryNotification(message, type = 'info') {
+    const container = document.getElementById('notification-container');
+    const notification = document.createElement('div');
+    
+    const icons = {
+        welcome: 'fas fa-crown',
+        success: 'fas fa-check-circle',
+        info: 'fas fa-chart-line',
+        warning: 'fas fa-exclamation-triangle'
+    };
+    
+    const colors = {
+        welcome: 'linear-gradient(45deg, #FFD700, #FF8C00)',
+        success: 'linear-gradient(45deg, #00FF88, #00CC66)',
+        info: 'linear-gradient(45deg, #0080FF, #0066CC)',
+        warning: 'linear-gradient(45deg, #FF8C00, #FF6600)'
+    };
+    
+    notification.className = `luxury-notification ${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="${icons[type] || icons.info}"></i>
+            <span>${message}</span>
+        </div>
+        <div class="notification-progress"></div>
+    `;
+    
+    notification.style.cssText = `
+        position: fixed;
+        top: 30px;
+        right: 30px;
+        background: ${colors[type] || colors.info};
+        color: white;
+        padding: 1.5rem 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        z-index: 10000;
+        transform: translateX(120%);
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        min-width: 350px;
+        max-width: 500px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.2);
+    `;
+    
+    container.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    const progress = notification.querySelector('.notification-progress');
+    progress.style.cssText = `
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        background: rgba(255,255,255,0.8);
+        border-radius: 0 0 15px 15px;
+        width: 100%;
+        animation: progressBar 4s linear;
+    `;
+    
+    setTimeout(() => {
+        notification.style.transform = 'translateX(120%)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 500);
+    }, 4000);
+}
+
+// Copy username function
+function copyUsername(username) {
+    navigator.clipboard.writeText(username).then(() => {
+        showLuxuryNotification(`تم نسخ اليوزر: ${username}`, 'success');
+    }).catch(() => {
+        showLuxuryNotification('فشل في نسخ اليوزر', 'warning');
+    });
+}
+
+// Auto-refresh with smoother animation
+setInterval(function() {
+    document.body.style.transition = 'opacity 0.5s ease';
+    document.body.style.opacity = '0.9';
+    setTimeout(() => location.reload(), 1000);
+}, 60000);
+
+// Initialize the live stats system
+document.addEventListener('DOMContentLoaded', function() {
+    new LiveStatsSystem();
+});
+
+// Add enhanced styles
+const enhancedStyles = document.createElement('style');
+enhancedStyles.textContent = `
+    @keyframes progressBar {
+        from { width: 100%; }
+        to { width: 0%; }
+    }
+    
+    .notification-content {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-weight: 500;
+        font-size: 1rem;
+    }
+    
+    .notification-content i {
+        font-size: 1.5rem;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+    
+    .stat-updated {
+        animation: statUpdate 1s ease-in-out;
+    }
+    
+    @keyframes statUpdate {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+        100% { transform: scale(1); }
+    }
+    
+    .time-remaining.shine-active::before {
+        animation: timeShine 1s ease-out;
+    }
+    
+    .btn-copy-user {
+        background: transparent;
+        border: 2px solid rgba(255, 215, 0, 0.5);
+        color: #FFD700;
+        padding: 0.75rem;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .btn-copy-user:hover {
+        background: #FFD700;
+        color: #000;
+        transform: scale(1.1);
+    }
+`;
+document.head.appendChild(enhancedStyles);
+</script>
+{% endblock %}
